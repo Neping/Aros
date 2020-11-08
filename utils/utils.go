@@ -15,3 +15,11 @@ func IntToHex(num int64) []byte  {
 
 	return buff.Bytes()
 }
+
+func IntMax(a, b int) int {
+	if a < b {
+        return b
+    }
+
+    return a
+}

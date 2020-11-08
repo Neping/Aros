@@ -81,7 +81,6 @@ func (cli *CLI) Run() {
 	createBlockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
 	sendCmd 			:= flag.NewFlagSet("send", flag.ExitOnError)
 	printChainCmd 		:= flag.NewFlagSet("printchain", flag.ExitOnError)
-
 	getBalanceAddress 	:= getBalanceCmd.String("address", "", "The address to get balance for")
 	createBlockchainAddress := createBlockchainCmd.String("address", "", "The address to send genesis block reward to")
 	sendFrom 			:= sendCmd.String("from", "", "Source wallet address")
