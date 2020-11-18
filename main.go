@@ -13,6 +13,5 @@ func main() {
 	//cli := blockchain.CLI{}
 	//cli.Run()
 	//news.Run()
-
 	fmt.Println("============ run end! =============")
 }

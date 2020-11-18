@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/md5"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
+	"encoding/hex"
 	"encoding/pem"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -57,16 +60,6 @@ func DecryptAES(src, key []byte) []byte {
 	blockMode.CryptBlocks(src, src)
 
 	return unpaddingText(src)
-}
-
-
-func TestAES()  {
-	src := []byte("this is a aes test")
-	key := []byte("1234567890abcdef")
-	str := EncryptAES(src, key)
-	fmt.Println("EncryptAES: "+ string(str))
-	str = DecryptAES(str, key)
-	fmt.Println("DecryptAES: "+ string(str))
 }
 
 // RSA Public Key & Private Key Create
@@ -189,6 +182,15 @@ func DecryptPriRSA(src []byte, pathName string) ([]byte, error) {
 	return ret, nil
 }
 
+func TestAES()  {
+	src := []byte("this is a aes test")
+	key := []byte("1234567890abcdef")
+	str := EncryptAES(src, key)
+	fmt.Println("EncryptAES: "+ string(str))
+	str = DecryptAES(str, key)
+	fmt.Println("DecryptAES: "+ string(str))
+}
+
 func TestRsa()  {
 	err := RsaGenKey(4096)
 	fmt.Println("key create error info: ", err)
@@ -208,4 +210,28 @@ func TestRsa()  {
 		panic(err)
 	}
 	fmt.Println("private encrypt data: ", string(decr))
+}
+
+// md5
+// fmt.Println(utils.MD5([]byte("123456")))
+func MD5(src []byte) string {
+	res := md5.Sum(src)
+	//ret := hex.EncodeToString(res[:])
+	ret := fmt.Sprintf("%x", res)
+
+	return ret
+}
+
+// 可多重追加md5
+// fmt.Println(utils.MD5Muilt([]byte("123456")))
+func MD5Muilt(src []byte) string {
+	hash := md5.New()
+	// 添加数据
+	// 方法1
+	io.WriteString(hash, string(src))
+	// 方法2
+	// res.Write(src)
+	res := hash.Sum(nil)
+
+	return hex.EncodeToString(res)
 }
