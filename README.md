@@ -1,4 +1,4 @@
-# CHOS
+# Aros
 
 this is a golang demo.
 
